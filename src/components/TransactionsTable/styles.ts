@@ -7,6 +7,17 @@ export const Container = styled.div`
     width: 100%;
     border-spacing: 0 0.5rem;
 
+    tr {
+      position: relative;
+
+      &:hover {
+        .edit {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+
     th {
       color: var(--text-body);
       font-weight: 400;
@@ -33,6 +44,17 @@ export const Container = styled.div`
       &.withdraw {
         color: var(--red);
       }
+    }
+
+    .edit {
+      width: 18px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: transparent;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 250ms, visibility 250ms;
     }
   }
 `;

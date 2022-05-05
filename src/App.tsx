@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dashboard } from "./components/Dashboard";
 import Modal from "react-modal";
 import { Header } from "./components/Header";
-import { NewTransactionModal } from "./components/NewTransactionModal";
+import { TransactionModal } from "./components/TransactionModal";
 import { TransactionsProvider } from './hooks/useTransactions';
 
 import { GlobalStyle } from "./styles/global";
@@ -10,23 +10,40 @@ import { GlobalStyle } from "./styles/global";
 Modal.setAppElement('#root');
 
 export function App() {
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+  const [transactionModalOpen, setTransactionModalOpen] = useState(false);
+  const [transactionModalTitle, setTransactionModalTitle] = useState('')
 
-  function handleOpenNewTransactionModal() {
-    setIsNewTransactionModalOpen(true);
+  function handleOpenTransactionModal() {
+    setTransactionModalOpen(true);
   }
 
-  function handleCloseNewTransactionModal() {
-    setIsNewTransactionModalOpen(false);
+  function handleCloseTransactionModal() {
+    setTransactionModalOpen(false);
+  }
+
+  function transactionModalTitleNewTransaction () {
+    setTransactionModalTitle('Cadastrar transação');
+  }
+
+  function transactionModalTitleUpdateTransaction() {
+    setTransactionModalTitle('Editar ou excluir transação');
   }
 
   return (
     <TransactionsProvider>
-      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
-      <Dashboard />
-      <NewTransactionModal
-        isOpen={isNewTransactionModalOpen}
-        onRequestClose={handleCloseNewTransactionModal}
+      <Header
+        onOpenTransactionModal={handleOpenTransactionModal}
+        transactionModalTitleNewTransaction={transactionModalTitleNewTransaction}
+      />
+      <Dashboard
+        onOpenTransactionModal={handleOpenTransactionModal}
+        transactionModalTitleUpdateTransaction={transactionModalTitleUpdateTransaction}
+      />
+
+      <TransactionModal
+        isOpen={transactionModalOpen}
+        onRequestClose={handleCloseTransactionModal}
+        transactionModalTitle={transactionModalTitle}
       />
       <GlobalStyle />
     </TransactionsProvider>

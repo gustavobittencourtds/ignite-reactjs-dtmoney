@@ -1,8 +1,14 @@
-import { useContext } from "react";
 import { useTransactions } from "../../hooks/useTransactions";
 import { Container } from "./styles";
 
-export function TransactionsTable () {
+import engineImg from '../../assets/engine.svg';
+
+interface transactionTableProps {
+  onOpenTransactionModal: () => void;
+  transactionModalTitleUpdateTransaction: () => void;
+}
+
+export function TransactionsTable({ onOpenTransactionModal, transactionModalTitleUpdateTransaction }: transactionTableProps) {
   const { transactions } = useTransactions();
   
   return (
@@ -33,6 +39,9 @@ export function TransactionsTable () {
                   new Date(transaction.createdAt)
                 )}  
               </td>
+              <button type="button" className="edit" onClick={() => { onOpenTransactionModal(); transactionModalTitleUpdateTransaction(); }}>
+                <img src={engineImg} alt="Editar" />
+              </button>
             </tr>
           ))}
         </tbody>
